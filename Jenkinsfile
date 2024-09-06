@@ -2,12 +2,14 @@ pipeline {
     agent {
         docker {
             image 'python:latest'
-            args '-v /tmp/cache:/pip-cache'
+            args '-v /home/venv:/pip-cache'
         }
     }
     stages {
         stage('Build') {
             steps {
+                sh 'python -m venv venv'
+                sh 'source venv/bin/activate && pip install --upgrade pip'
                 sh 'pip install -r requirements.txt'
                 sh 'python -m flask run --port=5000'
             }
