@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        docker { image 'python:3' }
+        docker {
+            image 'python:latest'
+            args '-v /tmp/cache:/pip-cache'
+        }
     }
     stages {
         stage('Build') {
